@@ -1,13 +1,62 @@
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Library {
-    public static void main(String[] args) {
-        Book konyv = new Book("1984", 1949, "dráma", List.of(new Author("Orwell")));
 
-        Book masikKonyv = new Book("Migránsok", 2018, "horror",
-                List.of(new Author("Orwell"),new Author("Soros György")));
+    private Map<Book, Integer> bookAmount;
 
-        System.out.println(konyv);
+    // private List<Book> books;
+    private List<Reader> readers;
+
+    public Library() {
+        this.bookAmount = new HashMap<>();
+        this.readers = new ArrayList<>();
     }
+
+    public void addBook(Book book) {
+        if (bookAmount.containsKey(book)) {
+            this.bookAmount.put(book, (bookAmount.get(book)+1));
+        }
+    }
+
+    public void addBookWithQuntity(Book book, int howMany) {
+        if (bookAmount.containsKey(book)) {
+        this.bookAmount.put(book, (bookAmount.get(book)+howMany));
+        }
+    }
+
+    // TODO
+    public List<Book> findBookByTitle(String title) throws BookNotFound {
+        List<Book> result = new ArrayList<>();
+        for (Book book : bookAmount.keySet()) {
+            if (book.getTitle().equals(title)) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    public List<Book> findBookByGenre(Genre genre) {
+        List<Book> result = new ArrayList<>();
+        for (Book book : bookAmount.keySet()) {
+            if (book.getGenre() == genre) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    public List<Book> findBookByAuthor(String AuthorName) {
+        List<Book> result = new ArrayList<>();
+        for (Book book : bookAmount.keySet()) {
+            for (Author author : book.getAuthors()) {
+                if (author.getName().contains(AuthorName)) {
+                    result.add(book);
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+
 }
